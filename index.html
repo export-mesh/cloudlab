@@ -1,0 +1,874 @@
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090d18">
+    <title>CloudLab — Repetition &amp; Training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090d18;
+            --panel: rgba(19, 27, 46, .72);
+            --panel2: rgba(25, 35, 59, .72);
+            --line: rgba(167, 190, 255, .13);
+            --muted: #9aa8c5;
+            --text: #edf2ff;
+            --cyan: #66e3ff;
+            --violet: #9b8cff;
+            --pink: #ff83c8;
+            --green: #73e6b1;
+            --shadow: 0 22px 65px rgba(0, 0, 0, .32)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 95px
+        }
+
+        body {
+            margin: 0;
+            background: radial-gradient(ellipse at 12% 0%, rgba(64, 95, 190, .22), transparent 34%), radial-gradient(ellipse at 92% 18%, rgba(142, 70, 190, .17), transparent 30%), var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.65
+        }
+
+        body:before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .15;
+            background-image: linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, black, transparent 80%)
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(18px);
+            background: rgba(9, 13, 24, .76);
+            border-bottom: 1px solid var(--line)
+        }
+
+        .nav {
+            max-width: 1180px;
+            margin: auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px
+        }
+
+        .brand {
+            font: 700 1.15rem 'Space Grotesk';
+            letter-spacing: -.04em
+        }
+
+        .brand span {
+            color: var(--cyan)
+        }
+
+        nav {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap
+        }
+
+        nav a {
+            font-size: .85rem;
+            color: var(--muted);
+            padding: 8px 11px;
+            border-radius: 10px;
+            transition: .25s
+        }
+
+        nav a:hover {
+            color: white;
+            background: rgba(255, 255, 255, .08)
+        }
+
+        main {
+            max-width: 1180px;
+            margin: auto;
+            padding: 48px 24px 90px
+        }
+
+        .hero {
+            position: relative;
+            padding: 58px 0 48px;
+            display: grid;
+            grid-template-columns: 1.3fr .7fr;
+            gap: 35px;
+            align-items: center
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--cyan);
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .13em;
+            text-transform: uppercase
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 14px var(--green)
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Space Grotesk';
+            line-height: 1.12;
+            letter-spacing: -.04em
+        }
+
+        h1 {
+            font-size: clamp(2.7rem, 6vw, 5.4rem);
+            margin: 18px 0 18px;
+            max-width: 780px
+        }
+
+        .gradient {
+            background: linear-gradient(100deg, var(--cyan), #a99aff 52%, var(--pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        .lead {
+            max-width: 660px;
+            color: #b5c1d9;
+            font-size: 1.08rem
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 27px
+        }
+
+        .btn {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 11px 17px;
+            color: white;
+            background: rgba(255, 255, 255, .06);
+            transition: transform .25s, background .25s, box-shadow .25s
+        }
+
+        .btn.primary {
+            background: linear-gradient(110deg, #367fbd, #7959c9);
+            border: 0;
+            box-shadow: 0 10px 28px rgba(83, 105, 220, .3)
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, .12);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .25)
+        }
+
+        .orbit-card,
+        .card,
+        .topic,
+        .quiz,
+        .taskbox {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+            border-radius: 20px
+        }
+
+        .orbit-card {
+            padding: 25px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .orbit-card:after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            right: -60px;
+            top: -70px;
+            background: linear-gradient(135deg, rgba(102, 227, 255, .24), rgba(155, 140, 255, .04));
+            filter: blur(8px)
+        }
+
+        .orbit-card h3 {
+            font-size: 1.1rem;
+            margin: 0 0 18px
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: .9rem
+        }
+
+        .stat:last-child {
+            border: 0
+        }
+
+        .stat b {
+            color: var(--cyan)
+        }
+
+        .section {
+            padding-top: 62px
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin-bottom: 23px
+        }
+
+        .kicker {
+            font-size: .75rem;
+            color: var(--violet);
+            font-weight: 700;
+            letter-spacing: .14em;
+            text-transform: uppercase
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.65rem);
+            margin: 8px 0
+        }
+
+        .sub {
+            color: var(--muted);
+            margin: 0;
+            max-width: 650px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px
+        }
+
+        .card {
+            padding: 22px;
+            transition: transform .3s, border-color .3s, background .3s
+        }
+
+        .card:hover,
+        .topic:hover {
+            transform: translateY(-5px);
+            border-color: rgba(102, 227, 255, .35);
+            background: rgba(27, 39, 66, .85)
+        }
+
+        .icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(102, 227, 255, .18), rgba(155, 140, 255, .2));
+            font-size: 1.2rem;
+            margin-bottom: 17px
+        }
+
+        .card h3,
+        .topic h3 {
+            margin: 0 0 9px;
+            font-size: 1.15rem
+        }
+
+        .card p,
+        .topic p {
+            color: var(--muted);
+            font-size: .93rem;
+            margin: 0
+        }
+
+        .pill {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 9px;
+            border-radius: 99px;
+            background: rgba(102, 227, 255, .09);
+            color: var(--cyan);
+            font-size: .72rem;
+            font-weight: 700
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px
+        }
+
+        .topic {
+            padding: 24px;
+            transition: .3s
+        }
+
+        .topic-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px
+        }
+
+        .tag {
+            font-size: .7rem;
+            padding: 5px 9px;
+            border-radius: 99px;
+            background: rgba(155, 140, 255, .14);
+            color: #c1b8ff
+        }
+
+        .topic p {
+            margin: 9px 0
+        }
+
+        .topic strong {
+            color: #e6edff
+        }
+
+        .code {
+            margin-top: 15px;
+            padding: 14px 16px;
+            background: #080d18;
+            border: 1px solid rgba(102, 227, 255, .12);
+            border-radius: 12px;
+            color: #b9d8ff;
+            font: .83rem/1.7 ui-monospace, SFMono-Regular, monospace;
+            overflow: auto
+        }
+
+        .callout {
+            margin-top: 14px;
+            padding: 12px 14px;
+            border-left: 2px solid var(--cyan);
+            background: rgba(102, 227, 255, .06);
+            border-radius: 0 10px 10px 0;
+            color: #bdc9e0;
+            font-size: .88rem
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px
+        }
+
+        .step {
+            padding: 18px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .035);
+            border-radius: 15px
+        }
+
+        .step small {
+            color: var(--cyan);
+            font-weight: 700;
+            letter-spacing: .1em
+        }
+
+        .step h3 {
+            font-size: 1rem;
+            margin: 10px 0 7px
+        }
+
+        .step p {
+            font-size: .86rem;
+            color: var(--muted);
+            margin: 0
+        }
+
+        .quiz {
+            padding: 25px
+        }
+
+        .quiz-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 18px
+        }
+
+        .progress {
+            height: 6px;
+            background: rgba(255, 255, 255, .08);
+            border-radius: 99px;
+            overflow: hidden;
+            margin: 16px 0 24px
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--cyan), var(--violet));
+            transition: width .4s
+        }
+
+        .question {
+            font: 600 1.22rem 'Space Grotesk';
+            margin: 0 0 18px
+        }
+
+        .answers {
+            display: grid;
+            gap: 10px
+        }
+
+        .answer {
+            width: 100%;
+            text-align: left;
+            padding: 13px 15px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: #dce6fa;
+            background: rgba(255, 255, 255, .035);
+            transition: .2s
+        }
+
+        .answer:hover:not(:disabled) {
+            border-color: var(--cyan);
+            background: rgba(102, 227, 255, .08);
+            transform: translateX(3px)
+        }
+
+        .answer.correct {
+            border-color: var(--green);
+            background: rgba(115, 230, 177, .12)
+        }
+
+        .answer.wrong {
+            border-color: #ff879d;
+            background: rgba(255, 135, 157, .1)
+        }
+
+        .feedback {
+            min-height: 30px;
+            margin: 15px 0;
+            color: var(--muted);
+            font-size: .9rem
+        }
+
+        .feedback.good {
+            color: var(--green)
+        }
+
+        .feedback.bad {
+            color: #ff9eae
+        }
+
+        .quiz-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .score {
+            color: var(--muted);
+            font-size: .88rem
+        }
+
+        .taskbox {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px
+        }
+
+        .taskbox h3 {
+            margin-top: 0
+        }
+
+        .taskbox p,
+        .taskbox li {
+            color: var(--muted);
+            font-size: .92rem
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 14px 0
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .checklist input {
+            accent-color: #7e9cff;
+            margin-right: 9px
+        }
+
+        .reflection {
+            width: 100%;
+            min-height: 110px;
+            resize: vertical;
+            background: rgba(4, 8, 17, .65);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 13px;
+            color: var(--text);
+            font: inherit;
+            outline: none
+        }
+
+        .reflection:focus {
+            border-color: var(--cyan)
+        }
+
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 25px;
+            text-align: center;
+            color: #71809f;
+            font-size: .82rem
+        }
+
+        @media(max-width:800px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 35px
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .taskbox {
+                grid-template-columns: 1fr
+            }
+
+            nav {
+                display: none
+            }
+        }
+
+        @media(max-width:540px) {
+            main {
+                padding: 25px 16px 65px
+            }
+
+            .grid,
+            .topic-grid {
+                grid-template-columns: 1fr
+            }
+
+            .section {
+                padding-top: 48px
+            }
+
+            .section-head {
+                display: block
+            }
+
+            .orbit-card {
+                margin-top: 5px
+            }
+
+            .nav {
+                padding: 13px 16px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="nav"><a class="brand" href="#start">CLOUD<span>LAB</span> <span
+                    style="color:#8290ad;font-weight:500">/ REPEAT</span></a>
+            <nav><a href="#uebersicht">Übersicht</a><a href="#themen">Themen</a><a href="#ablauf">Ablauf</a><a
+                    href="#quiz">Repetition</a><a href="#reflexion">Reflexion</a></nav>
+        </div>
+    </header>
+    <main id="start">
+        <section class="hero">
+            <div>
+                <div class="eyebrow"><span class="dot"></span> Cloud Computing · Lernhub</div>
+                <h1>Verstehe die Cloud.<br><span class="gradient">Teste dein Wissen.</span></h1>
+                <p class="lead">Eine kompakte, interaktive Lernseite zu IaaS, virtuellen Maschinen, SSH-Keypairs und
+                    Cloud-Init. Entdecke die Konzepte, verbinde die Schritte und überprüfe dein Wissen direkt.</p>
+                <div class="hero-actions"><a class="btn primary" href="#themen">Lerninhalte entdecken ↗</a><a
+                        class="btn" href="#quiz">Quiz starten</a></div>
+            </div>
+            <aside class="orbit-card">
+                <h3>Dein Lern-Dashboard</h3>
+                <div class="stat"><span>Module</span><b>04</b></div>
+                <div class="stat"><span>Quizfragen</span><b>06</b></div>
+                <div class="stat"><span>Geschätzte Lernzeit</span><b>10–15 min</b></div>
+                <div class="stat"><span>Schwerpunkt</span><b>Cloud Basics</b></div>
+            </aside>
+        </section>
+        <section class="section" id="uebersicht">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">01 / Überblick</div>
+                    <h2>Die Cloud in vier Bausteinen</h2>
+                    <p class="sub">Diese Grundlagen greifen ineinander: Du mietest Rechenleistung, startest eine VM und
+                        richtest den Zugang sowie die Erstkonfiguration ein.</p>
+                </div>
+            </div>
+            <div class="grid">
+                <article class="card">
+                    <div class="icon">☁</div>
+                    <h3>IaaS</h3>
+                    <p>Infrastruktur wie Server, Speicher und Netzwerk als flexibel nutzbarer Dienst.</p><span
+                        class="pill">Cloud-Modell</span>
+                </article>
+                <article class="card">
+                    <div class="icon">▣</div>
+                    <h3>Virtuelle Maschine</h3>
+                    <p>Ein softwarebasierter Computer mit eigenem Betriebssystem und zugewiesenen Ressourcen.</p><span
+                        class="pill">Compute</span>
+                </article>
+                <article class="card">
+                    <div class="icon">🔑</div>
+                    <h3>SSH-Keypairs</h3>
+                    <p>Ein Schlüsselpaar ermöglicht eine sichere, passwortlose Anmeldung per SSH.</p><span
+                        class="pill">Zugriff</span>
+                </article>
+                <article class="card">
+                    <div class="icon">⚙</div>
+                    <h3>Cloud-Init</h3>
+                    <p>Automatisiert die Einrichtung einer neuen Cloud-Instanz beim ersten Start.</p><span
+                        class="pill">Automatisierung</span>
+                </article>
+                <article class="card">
+                    <div class="icon">⇄</div>
+                    <h3>Zusammenspiel</h3>
+                    <p>Die Bausteine bilden gemeinsam einen reproduzierbaren Weg zur einsatzbereiten VM.</p><span
+                        class="pill">Workflow</span>
+                </article>
+                <article class="card">
+                    <div class="icon">◎</div>
+                    <h3>Sicherheit</h3>
+                    <p>Nur nötige Zugriffe freigeben, Schlüssel schützen und Systeme aktuell halten.</p><span
+                        class="pill">Best Practice</span>
+                </article>
+            </div>
+        </section>
+        <section class="section" id="themen">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">02 / Erklärungen</div>
+                    <h2>Die wichtigsten Themen</h2>
+                    <p class="sub">Lies die Erklärung und achte besonders darauf, welche Aufgabe der jeweilige Baustein
+                        übernimmt.</p>
+                </div>
+            </div>
+            <div class="topic-grid">
+                <article class="topic">
+                    <div class="topic-top">
+                        <h3>Infrastructure as a Service</h3><span class="tag">IaaS</span>
+                    </div>
+                    <p><strong>Was ist das?</strong> Ein Cloud-Anbieter stellt grundlegende IT-Infrastruktur über das
+                        Netzwerk bereit. Dazu gehören virtuelle Server, Speicher und Netzwerke.</p>
+                    <p><strong>Dein Vorteil:</strong> Ressourcen können flexibel skaliert werden. Du musst keine eigene
+                        physische Serverhardware betreiben.</p>
+                    <div class="callout">Merke: Beim IaaS-Modell verwaltest du typischerweise Betriebssystem,
+                        Anwendungen und Daten. Der Anbieter betreibt die zugrunde liegende Hardware.</div>
+                </article>
+                <article class="topic">
+                    <div class="topic-top">
+                        <h3>Virtual Machine</h3><span class="tag">VM</span>
+                    </div>
+                    <p><strong>Was ist das?</strong> Eine VM ist ein isolierter, softwarebasierter Rechner. Sie erhält
+                        virtuelle CPU-, RAM- und Speicherressourcen und startet ein Betriebssystem.</p>
+                    <p><strong>Typische Einstellungen:</strong> Image, Instanzgrösse, Netzwerk, Speicher und
+                        Zugriffsschlüssel.</p>
+                    <div class="callout">Merke: Ein Image ist die Vorlage für das Betriebssystem. Die VM ist die daraus
+                        gestartete Instanz.</div>
+                </article>
+                <article class="topic">
+                    <div class="topic-top">
+                        <h3>SSH-Keypairs</h3><span class="tag">Authentifizierung</span>
+                    </div>
+                    <p><strong>Was ist das?</strong> Ein Keypair besteht aus einem privaten und einem öffentlichen
+                        Schlüssel. Der öffentliche Schlüssel kommt auf den Server, der private bleibt geheim bei dir.
+                    </p>
+                    <p><strong>Warum?</strong> Der Server kann prüfen, ob du den passenden privaten Schlüssel besitzt,
+                        ohne dass dieser übertragen wird.</p>
+                    <div class="code">Public Key → auf dem Server hinterlegen<br>Private Key → sicher und geheim
+                        aufbewahren</div>
+                </article>
+                <article class="topic">
+                    <div class="topic-top">
+                        <h3>Cloud-Init</h3><span class="tag">Konfiguration</span>
+                    </div>
+                    <p><strong>Was ist das?</strong> Cloud-Init ist ein Werkzeug zur automatischen Initialisierung von
+                        Cloud-Instanzen. Es verarbeitet beim Start Konfigurationsdaten.</p>
+                    <p><strong>Beispiele:</strong> Benutzer anlegen, Pakete installieren, Dateien schreiben oder Dienste
+                        konfigurieren.</p>
+                    <div class="code">#cloud-config<br>package_update: true<br>packages:<br> - nginx</div>
+                    <div class="callout">Merke: Cloud-Init automatisiert wiederkehrende Einrichtungsschritte und macht
+                        Starts reproduzierbarer.</div>
+                </article>
+            </div>
+        </section>
+        <section class="section" id="ablauf">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">03 / Anwenden</div>
+                    <h2>Wie hängt alles zusammen?</h2>
+                    <p class="sub">Ein typischer Ablauf, um eine neue Cloud-VM bereitzustellen.</p>
+                </div>
+            </div>
+            <div class="steps">
+                <div class="step"><small>STEP 01</small>
+                    <h3>Infrastruktur wählen</h3>
+                    <p>Im IaaS-Portal Image, VM-Grösse, Netzwerk und Speicher bestimmen.</p>
+                </div>
+                <div class="step"><small>STEP 02</small>
+                    <h3>Schlüssel zuweisen</h3>
+                    <p>Den öffentlichen SSH-Schlüssel für den gewünschten Zugang hinterlegen.</p>
+                </div>
+                <div class="step"><small>STEP 03</small>
+                    <h3>Cloud-Init angeben</h3>
+                    <p>Startkonfiguration wie Benutzer oder benötigte Pakete definieren.</p>
+                </div>
+                <div class="step"><small>STEP 04</small>
+                    <h3>VM prüfen</h3>
+                    <p>Instanz starten, Status kontrollieren und Verbindung testen.</p>
+                </div>
+            </div>
+        </section>
+        <section class="section" id="quiz">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">04 / Wissenscheck</div>
+                    <h2>Teste dein Wissen</h2>
+                    <p class="sub">Wähle pro Frage eine Antwort. Du erhältst direkt eine Rückmeldung und am Ende deine
+                        Punktzahl.</p>
+                </div>
+            </div>
+            <div class="quiz">
+                <div class="quiz-head"><strong id="q-counter">Frage 1 von 6</strong><span class="score"
+                        id="score">Punkte: 0</span></div>
+                <div class="progress"><span id="progress" style="width: 0%;"></span></div>
+                <p class="question" id="question">Wofür steht IaaS?</p>
+                <div class="answers" id="answers"><button class="answer">Internet as a Software</button><button
+                        class="answer">Infrastructure as a Service</button><button class="answer">Instance and Access
+                        System</button></div>
+                <p class="feedback" id="feedback" aria-live="polite"></p>
+                <div class="quiz-bottom"><span class="score" id="hint">Überlege kurz, bevor du auswählst.</span><button
+                        class="btn primary" id="next" disabled="">Weiter →</button></div>
+            </div>
+        </section>
+        <section class="section" id="reflexion">
+            <div class="section-head">
+                <div>
+                    <div class="kicker">05 / Sichern</div>
+                    <h2>Reflexion &amp; Gallery Walk</h2>
+                    <p class="sub">Bereite deine Erklärung für andere Lernende vor. Was kannst du bereits sicher
+                        erklären?</p>
+                </div>
+            </div>
+            <div class="taskbox">
+                <div>
+                    <h3>Dein Check-out</h3>
+                    <ul class="checklist">
+                        <li><label><input type="checkbox"> Ich kann IaaS in eigenen Worten erklären.</label></li>
+                        <li><label><input type="checkbox"> Ich kann eine VM und ein Image unterscheiden.</label></li>
+                        <li><label><input type="checkbox"> Ich weiss, welcher SSH-Schlüssel geheim bleibt.</label></li>
+                        <li><label><input type="checkbox"> Ich kann zwei Aufgaben von Cloud-Init nennen.</label></li>
+                        <li><label><input type="checkbox"> Ich kann den Ablauf von der VM-Erstellung bis zum Test
+                                erklären.</label></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Erkläre es kurz</h3>
+                    <p>Welche Verbindung zwischen VM, SSH-Keypair und Cloud-Init ist besonders wichtig? Notiere deine
+                        Erklärung für den Gallery Walk.</p><textarea class="reflection"
+                        placeholder="Meine Erklärung …"></textarea>
+                    <p style="font-size:.78rem">Tipp: Erkläre nicht nur was es ist, sondern auch wozu es gebraucht wird.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>CloudLab · Interaktive Repetition · Lerne, teste, erkläre.</footer>
+    <script>
+        const questions = [
+            {q: "Wofür steht IaaS?", a: ["Internet as a Software", "Infrastructure as a Service", "Instance and Access System"], c: 1, e: "IaaS bedeutet Infrastructure as a Service: grundlegende IT-Infrastruktur wird als Dienst bereitgestellt."},
+            {q: "Was beschreibt eine virtuelle Maschine am besten?", a: ["Einen softwarebasierten Computer mit eigenem Betriebssystem", "Ein physisches Netzwerkkabel", "Ein Backup einer Webseite"], c: 0, e: "Eine VM bildet einen eigenständigen Computer innerhalb einer virtualisierten Umgebung ab."},
+            {q: "Welcher SSH-Schlüssel muss geheim bleiben?", a: ["Der öffentliche Schlüssel", "Beide Schlüssel müssen veröffentlicht werden", "Der private Schlüssel"], c: 2, e: "Der private Schlüssel bleibt bei dir und wird niemals weitergegeben. Der öffentliche Schlüssel darf auf dem Server liegen."},
+            {q: "Wo wird der öffentliche SSH-Schlüssel typischerweise hinterlegt?", a: ["Auf dem Server bzw. bei der VM-Konfiguration", "In einer öffentlichen Chatnachricht", "Im Namen des Betriebssystems"], c: 0, e: "Der Server nutzt den hinterlegten öffentlichen Schlüssel, um die Anmeldung mit dem passenden privaten Schlüssel zu prüfen."},
+            {q: "Wann wird Cloud-Init typischerweise aktiv?", a: ["Beim ersten Start einer Cloud-Instanz", "Nur beim Herunterfahren", "Erst nach dem manuellen Öffnen eines Browsers"], c: 0, e: "Cloud-Init verarbeitet beim Start bereitgestellte Konfigurationsdaten und kann die Erstinstallation automatisieren."},
+            {q: "Welche Aufgabe passt zu Cloud-Init?", a: ["Die physische CPU im Rechenzentrum reparieren", "Pakete installieren und Benutzer konfigurieren", "Den privaten SSH-Schlüssel veröffentlichen"], c: 1, e: "Cloud-Init kann unter anderem Pakete installieren, Benutzer anlegen und Konfigurationsdateien schreiben."}
+        ];
+        let index = 0, points = 0, answered = false;
+        const qEl = document.getElementById('question'), aEl = document.getElementById('answers'), fEl = document.getElementById('feedback'), next = document.getElementById('next');
+        function render() {
+            answered = false; const q = questions[index];
+            document.getElementById('q-counter').textContent = `Frage ${index + 1} von ${questions.length}`;
+            document.getElementById('score').textContent = `Punkte: ${points}`;
+            document.getElementById('progress').style.width = `${index / questions.length * 100}%`;
+            qEl.textContent = q.q; aEl.innerHTML = ''; fEl.textContent = ''; fEl.className = 'feedback';
+            q.a.forEach((answer, i) => {const b = document.createElement('button'); b.className = 'answer'; b.textContent = answer; b.onclick = () => choose(i); aEl.appendChild(b)});
+            next.disabled = true; next.textContent = index === questions.length - 1 ? 'Ergebnis anzeigen ✓' : 'Weiter →';
+        }
+        function choose(choice) {
+            if (answered) return; answered = true; const q = questions[index], buttons = [...aEl.children];
+            buttons.forEach((b, i) => {b.disabled = true; if (i === q.c) b.classList.add('correct'); else if (i === choice) b.classList.add('wrong')});
+            if (choice === q.c) {points++; fEl.textContent = 'Richtig! ' + q.e; fEl.classList.add('good')}
+            else {fEl.textContent = 'Noch nicht ganz. ' + q.e; fEl.classList.add('bad')}
+            document.getElementById('score').textContent = `Punkte: ${points}`; next.disabled = false;
+        }
+        next.onclick = () => {if (!answered) return; if (index < questions.length - 1) {index++; render()} else {document.getElementById('progress').style.width = '100%'; document.getElementById('q-counter').textContent = 'Abgeschlossen'; qEl.textContent = `Du hast ${points} von ${questions.length} Punkten erreicht.`; aEl.innerHTML = ''; fEl.className = 'feedback good'; fEl.textContent = points === questions.length ? 'Perfekt — alle Antworten richtig!' : points >= 4 ? 'Sehr gut! Wiederhole noch die Themen, bei denen du unsicher warst.' : 'Guter Anfang. Lies die Erklärungen nochmals und versuche es erneut.'; next.textContent = 'Quiz wiederholen'; next.disabled = false; next.onclick = () => {index = 0; points = 0; next.onclick = advance; render()}} };
+        function advance() {if (!answered) return; if (index < questions.length - 1) {index++; render()} else {index = 0; points = 0; render()} }
+        render();
+    </script>
+
+</body>
+
+</html>
